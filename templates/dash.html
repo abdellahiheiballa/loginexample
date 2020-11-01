@@ -1,0 +1,42 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard2
+{% endblock %}
+<!-- Specific Page JS goes HERE  -->
+
+{% block scripts %}
+ 
+ {% endblock scripts %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+    <div class="container-fluid">
+      <div class="row">
+        {% include 'sidebar.html' %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Welcome222, {{ name }}</h1>
+
+
+           <!-- (Almost) A blank page -->
+
+            <div class="row">
+              <div class="col-md-12">
+                  <div class="bgc-white bd bdrs-3 p-20 mB-20">
+                  <h4 class="c-grey-900 mB-20">Meeting</h4>
+                  <div id="meet"></div>
+                  </div>
+              </div>
+            </div>
+
+        
+        </div>
+      </div>
+    </div>
+{% endblock %}

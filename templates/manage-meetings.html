@@ -1,0 +1,73 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard2
+{% endblock %}
+<!-- Specific Page JS goes HERE  -->
+
+{% block scripts %}
+ 
+ {% endblock scripts %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    {% include 'sidebar.html' %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Welcome, {{ name }}</h1>
+
+
+        <div class="row">
+          <div class="col-md-12">
+              <div class="bgc-white bd bdrs-3 p-20">
+              <h4 class="c-grey-900 mB-20">Manage meetings</h4>
+              <p>Add <code class="highlighter-rouge">.table-hover</code> manage your rooms <code class="highlighter-rouge">&lt;tbody&gt;</code>.</p>
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Room Name</th>
+                      <th scope="col">Room Password</th>
+                      <th scope="col">Participants</th>
+                      <th scope="col">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                      <th scope="row">1</th>
+                      <td>Sherlock Holmes</td>
+                      <td class="hidetext">Password</td>
+                      <td>@mdom, @yasser, @jossur, @taha</td>
+                      <td>
+                          <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Manage meeting
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="/meeting">Start metting</a>
+                              <a class="dropdown-item" href="/edit-meeting">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                          </div>
+                          </div>
+                      </td>
+                  </tr>
+                  
+                  
+                  </tbody>
+              </table>
+              </div>
+          </div>
+      </div>
+
+        
+        </div>
+      </div>
+    </div>
+{% endblock %}
