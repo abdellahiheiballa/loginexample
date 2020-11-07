@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard2
+{% endblock %}
+<!-- Specific Page JS goes HERE  -->
+
+{% block scripts %}
+ 
+ {% endblock scripts %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    {% if isAdmin %}
+    {% include 'sidebar.html' %}
+    {% else %}
+    {% include 'sidebar2.html' %}
+    {% endif %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Welcome, {{ name }}</h1>
+
+
+        <div class="row">
+          <div class="col-md-12">
+              <div class="bgc-white bd bdrs-3 p-20">
+              <h4 class="c-grey-900 mB-20">My rooms</h4>
+              <p>here is the <code class="highlighter-rouge">.meetings </code> assigned to you <code class="highlighter-rouge">&lt;{{ name }}&gt;</code>.</p>
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Room Name</th>
+                      <th scope="col">Room Password</th>
+                      <th scope="col">Participants</th>
+                      <th scope="col">Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {%for meeting in meetings%} 
+                  <tr>
+                      <th scope="row">{{ meeting.id }}</th>
+                      <td>{{ meeting.meetingname }}</td>
+                      <td class="hidetext">{{ meeting.password }}</td>
+                      <td>
+                        {%for User in meeting.guests%} 
+                        , {{User.username}}
+                        {% endfor %}    
+                      </td>
+                      <td>
+                          <form method="get" action="/meeting-guest/{{ meeting.id }}">
+                            <button type="submit" class="btn btn-primary">Join meeting</button>
+                        </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                  
+                  </tbody>
+              </table>
+              </div>
+          </div>
+      </div>
+
+        
+        </div>
+      </div>
+    </div>
+{% endblock %}

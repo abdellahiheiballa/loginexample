@@ -3,25 +3,48 @@
 {% block title %}
 Dashboard2
 {% endblock %}
+
 <!-- Specific Page JS goes HERE  -->
 
 {% block scripts %}
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src='https://meet.jit.si/external_api.js'></script>
+    <script src='https://jitsi.legal-tech.ma/external_api.js'></script>
     <script>
         $(document).ready(function () {
-
-            const domain = 'meet.jit.si';
+            const rm = '{{ meetingname }}';
+            const domain = 'jitsi.legal-tech.ma';
             const options = {
-                roomName: 'conan',
+                roomName: rm,
                 width: 900,
                 height: 700,
-                parentNode: document.querySelector('#meet')
+                parentNode: document.querySelector('#meet'),
+                userInfo: {
+                     email: '{{ email }}',
+                     displayName: '{{ name }}'
+                },
+                interfaceConfigOverwrite: {
+                TOOLBAR_BUTTONS:[
+                        'microphone', 'camera'
+            ]
+                }
             };
             const api = new JitsiMeetExternalAPI(domain, options);
+
+            var pass = '{{ meetingpassword }}';
+        
+                    api.addEventListener('participantRoleChanged', (event)=>{
+                        if (event.role==='moderator'){
+                            api.executeCommand('password', pass);
+                            api.executeCommand('toggleLobby', true);
+                        }
+                       
+                    }
+                    )
+               
            
-        })
+           
+        });
     </script>
  {% endblock scripts %}
 
@@ -35,9 +58,13 @@ Dashboard2
 
 <div class="container-fluid">
   <div class="row">
+    {% if isAdmin %}
     {% include 'sidebar.html' %}
+    {% else %}
+    {% include 'sidebar2.html' %}
+    {% endif %}
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Welcome, {{ name }}</h1>
+        <h1 class="page-header">meeting, {{ meetingname }}, {{ meetingpassword }}, {{active}}  </h1>
 
 
            <!-- (Almost) A blank page -->
@@ -47,6 +74,21 @@ Dashboard2
                   <div class="bgc-white bd bdrs-3 p-20 mB-20">
                   <h4 class="c-grey-900 mB-20">Meeting</h4>
                   <div id="meet"></div>
+                  
+                  <div class="gap-10 peers">
+                    <div class="peer">
+                        <form method="get" action="/end-meeting/{{ meeting_id }}">
+                            <button type="submit" class="btn cur-p btn-danger">End meeting</button>
+                        </form>
+                    </div>
+                    <div class="peer">
+                        <form method="get" action="/end-meeting/{{ meeting_id }}">
+                            <button type="submit" class="btn cur-p btn-secondary">Mute all guests</button>
+                        </form>
+                    </div>                   
+                  </div>
+                    
+                </div>
                   </div>
               </div>
             </div>
@@ -54,5 +96,10 @@ Dashboard2
         
         </div>
       </div>
+      <h1 class="page-header">Welcome, {{ name }} </h1>
+
+      
+    
+      
     </div>
 {% endblock %}

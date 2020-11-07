@@ -40,25 +40,30 @@ Dashboard2
                   </tr>
                   </thead>
                   <tbody>
+                    {%for meeting in meetings%} 
                   <tr>
-                      <th scope="row">1</th>
-                      <td>Sherlock Holmes</td>
-                      <td class="hidetext">Password</td>
-                      <td>@mdom, @yasser, @jossur, @taha</td>
+                      <th scope="row">{{ meeting.id }}</th>
+                      <td>{{ meeting.meetingname }}</td>
+                      <td class="hidetext">{{ meeting.password }}</td>
+                      <td>
+                        {%for User in meeting.guests%} 
+                        , {{User.username}}
+                        {% endfor %}    
+                      </td>
                       <td>
                           <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Manage meeting
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="/meeting">Start metting</a>
-                              <a class="dropdown-item" href="/edit-meeting">Edit</a>
+                              <a class="dropdown-item" href="/meeting/{{ meeting.id }}">Start metting</a>
+                              <a class="dropdown-item" href="/edit-meeting/{{ meeting.id }}">Edit</a>
                               <a class="dropdown-item" href="#">Delete</a>
                           </div>
                           </div>
                       </td>
                   </tr>
-                  
+                  {% endfor %}
                   
                   </tbody>
               </table>

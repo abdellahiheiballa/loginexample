@@ -1,5 +1,5 @@
 {% extends "bootstrap/base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}
 Dashboard2
 {% endblock %}
@@ -31,23 +31,10 @@ Dashboard2
       Creating new meeting
       </h3>
       <div class="mT-30">
-      <form method="post" action="/manage-meetings">
-         
-          <div class="form-group">
-          <label for="exampleInputRoomName">meeting Name</label>
-          <input type="text" class="form-control" id="exampleInputRoomName"  placeholder="Enter meeting name">
-          <small id="meetingName" class="form-text text-muted">This is the meeting name.</small>
-          </div>
-          <!-- <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
-              <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-              <label for="inputCall1" class="peers peer-greed js-sb ai-c">
-                  <span class="peer peer-greed">Add password to room</span>
-              </label>
-              </div> -->
-          <div class="form-group">
-          <label for="exampleInputPassword1">Password (optionnel)</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
-          </div>
+      <form method="post" action="/new-meeting">
+          {{ form.hidden_tag() }}
+          {{ wtf.form_field(form.meetingname) }}
+          {{ wtf.form_field(form.meetingpassword) }}
           <button type="submit" class="btn btn-primary">Create meeting</button>
       </form>
       </div>
