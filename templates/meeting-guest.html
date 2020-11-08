@@ -35,8 +35,7 @@ Dashboard2
         
                     api.addEventListener('participantRoleChanged', (event)=>{
                         if (event.role==='moderator'){
-                            api.executeCommand('password', pass);
-                            api.executeCommand('toggleLobby', true);
+                            api.executeCommand('hangup');
                         }
                        
                     }
